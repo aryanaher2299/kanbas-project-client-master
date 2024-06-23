@@ -3,7 +3,6 @@
     padding: 0px;
     width: 125px;
     margin: 0px;
-    /* margin-left: 20px; */
     margin-top: 20px;
     height: 100vh;
     color: white;
@@ -11,7 +10,6 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
-    /* gap: 0.1rem; */
 }
 
 .wd-navigation li {

@@ -3,9 +3,6 @@ import CourseNavigation from "./Navigation";
 import Navigation from "../Navigation";
 import Modules from "./Modules";
 import Home from "./Home";
-import Assignments from "./Assignments";
-import Editor from "./Assignments/Editor";
-import Grades from "./Grades";
 import './index.css';
 import { HiMiniBars3 } from "react-icons/hi2";
 import { FaCaretDown } from "react-icons/fa";
@@ -22,7 +19,7 @@ import NewQuestion from "./Quizzes/QuizEditor/QuizEditorQuestion/NewQuestion";
 import QuizPreview from "./Quizzes/QuizPreview";
 import QuizPreviewResult from "./Quizzes/QuizPreviewResult";
 
-const API_BASE = process.env.REACT_APP_API_BASE;
+const REMOTE_SERVER = process.env.REACT_APP_REMOTE_SERVER;
 
 export const CourseNavContext = createContext(
   {
@@ -59,7 +56,7 @@ function Courses() {
   const [openMobileCourseNav, setOpenMobileCourseNav] = useState(false);
   const [openMobileMainNav, setOpenMobileMainNav] = useState(false);
   const { courseId } = useParams();
-  const COURSES_API = `${API_BASE}/api/courses`;
+  const COURSES_API = `${REMOTE_SERVER}/api/courses`;
   const [course, setCourse] = useState<any>({ _id: "" });
   // const findCourseById = async (courseId?: string) => {
   //     const response = await axios.get(
@@ -235,9 +232,6 @@ function Courses() {
             <Route path="Home" element={<Home />} />
             <Route path="Modules" element={<Modules />} />
             <Route path="Piazza" element={<h1>Piazza</h1>} />
-            <Route path="Assignments" element={<Assignments />} />
-            <Route path="Assignments/:assignmentId" element={<Editor />} />
-            <Route path="Grades" element={<Grades />} />
             <Route path="Quizzes" element={<Quizzes />} />
             <Route path="Quizzes/:quizId/details" element={<QuizDetails />} />
             <Route path="Quizzes/:quizId/editor" element={<QuizEditor />} />

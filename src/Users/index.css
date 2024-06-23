@@ -1,50 +1,127 @@
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
 .SignInBox {
-  height: 100%;
-  width: 50%;
-  margin: 0 auto;
-  padding: 20px;
+  background-color: #ffffff;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 400px;
+  max-width: 90%;
+  margin: auto;
+}
+
+.SignInBox h1 {
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.SignInBox .input-group {
+  padding: 0.5rem;
   border: 1px solid #ccc;
-  border-radius: 5px;
-  background-color: #fff;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-.SignInBox input {
+  border-radius: 4px;
   width: 100%;
-  border: none;
-  border-bottom: 1px solid #ccc;
-  padding: 10px;
-  margin-bottom: 10px;
+  box-sizing: border-box;
+  font-size: 1rem;
 }
 
-.SignInBox input:focus {
+.SignInBox .input-group:focus {
   outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.SignInBox .siginbutton,
+.SignInBox .signupbutton {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 1rem;
 }
 
 .SignInBox .siginbutton {
-  width: 60%;
-  padding: 10px;
-  border: 1px solid #D41B2C;
-    border-radius: 5px;
-    background-color: transparent;
-    color: #D41B2C;
-    cursor: pointer;
-    transition: 0.2s all ease-in-out;
+  background-color: #000000;
+  color: white;
 }
 
 .SignInBox .siginbutton:hover {
-    background-color: #D41B2C;
-    color: #fff;
-    transition: 0.2s all ease-in-out;
+  background-color: #ff3b2f;
+  transform: scale(1.05);
 }
 
 .SignInBox .signupbutton {
-    width: 60%;
-    padding: 10px;
-    border: 1px solid #fff;
-    border-radius: 5px;
-    background-color: #FFA500;
-    color: #fff;
-    cursor: pointer;
-    transition: 0.2s all ease-in-out;
+  background-color: #ac1212;
+  color: white;
+}
+
+.SignInBox .signupbutton:hover {
+  background-color: #000000;
+  transform: scale(1.05);
+}
+
+.text-primary {
+  color: #007bff;
+}
+
+.text-primary:hover {
+  color: #0056b3;
+}
+
+.text-decoration-none {
+  text-decoration: none;
+}
+
+.mt-3 {
+  margin-top: 1rem;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 500px) {
+  .SignInBox {
+    width: 90%;
+    padding: 1.5rem;
+  }
+}
+
+.container {
+  max-width: 1200px;
+  margin: auto;
+}
+
+.table {
+  margin-top: 20px;
+}
+
+.table th, .table td {
+  vertical-align: middle;
+}
+
+.form-select {
+  margin-bottom: 10px;
+}
+
+.form-control {
+  margin-bottom: 10px;
+}
+
+.btn {
+  margin-right: 5px;
 }

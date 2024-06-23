@@ -1,7 +1,7 @@
 import axios from "axios";
-const API_BASE = process.env.REACT_APP_API_BASE;
-const COURSES_API = `${API_BASE}/api/courses`;
-const QUIZZES_API = `${API_BASE}/api/quizzes`;
+const REMOTE_SERVER = process.env.REACT_APP_REMOTE_SERVER;
+const COURSES_API = `${REMOTE_SERVER}/api/courses`;
+const QUIZZES_API = `${REMOTE_SERVER}/api/quizzes`;
 
 axios.defaults.withCredentials = true;
 

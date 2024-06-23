@@ -184,6 +184,7 @@ function Quizzes() {
                     <FaEllipsisV />
                     <FaList />
                     <div className="assignment-title-link d-flex flex-column">
+                     {/* add an if statement */}
                       <Link
                         to={`/Kanbas/courses/${courseId}/Quizzes/${quiz._id}/details`}
                       >

@@ -1,5 +1,5 @@
-import ModuleList from "../Modules/List";
-import StatusBar from "./Components/StatusBar";
+import ModuleList from "../Modules/Page";
+import ModuleControlButtons from "./Components/ModuleControlButtons";
 import "./index.css";
 
 function Home() {
@@ -8,7 +8,7 @@ function Home() {
         d-flex flex-row flex-grow-1 gap-4
         ">
             <ModuleList />
-            <StatusBar />
+            <ModuleControlButtons />
         </div>
     );
 }
