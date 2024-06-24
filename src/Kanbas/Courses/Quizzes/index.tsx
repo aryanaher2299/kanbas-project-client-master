@@ -1,22 +1,11 @@
-import React from "react";
-import { FaPlus, FaEllipsisV } from "react-icons/fa";
-import { Link, useNavigate } from "react-router-dom";
-import { useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
+import React, { useState, useEffect } from "react";
+import { FaEllipsisV } from "react-icons/fa";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 import { KanbasState } from "../../store";
-import { useEffect } from "react";
-import { useDispatch } from "react-redux";
 import { setQuizzes } from "./reducer";
 import * as client from "./client";
-import { useState } from "react";
-import {
-  FaCheckCircle,
-  FaCaretDown,
-  FaPlusCircle,
-  FaList,
-  FaPen,
-  FaTrash,
-} from "react-icons/fa";
+import { FaCheckCircle, FaCaretDown, FaPen, FaTrash } from "react-icons/fa";
 import { AiOutlineStop } from "react-icons/ai";
 
 function Quizzes() {
@@ -25,10 +14,10 @@ function Quizzes() {
   const [currentTime, setCurrentTime] = useState(new Date());
   const [showQuizContextMenu, setShowQuizContextMenu] = useState(false);
   const [currentQuiz, setCurrentQuiz] = useState({} as any);
-  const quizzes = useSelector(
-    (state: KanbasState) => state.quizzesReducer.quizzes
-  );
+  const [userRole, setUserRole] = useState("");
+  const quizzes = useSelector((state: KanbasState) => state.quizzesReducer.quizzes);
   const dispatch = useDispatch();
+
   const handleQuizStatus = (quiz: any) => {
     if (currentTime > new Date(quiz.untilDate)) {
       return "Closed";
@@ -41,8 +30,14 @@ function Quizzes() {
   };
 
   useEffect(() => {
-    client.findQuizzesForCourse(courseId).then((quizzes) => {
-      dispatch(setQuizzes(quizzes));
+    if (courseId !== undefined) {
+      client.findQuizzesForCourse(courseId).then((quizzes) => {
+        dispatch(setQuizzes(quizzes));
+      });
+    }
+
+    client.profile().then((profile) => {
+      setUserRole(profile.role);
     });
   }, [courseId, dispatch]);
 
@@ -53,34 +48,57 @@ function Quizzes() {
     return () => clearInterval(interval);
   }, []);
 
+  if (userRole === "STUDENT") {
+    return (
+      <div>
+        <h1>Quizzes</h1>
+        <ul className="list-group">
+          {quizzes.map((quiz, index) => (
+            <li key={index} className="list-group-item">
+              <Link to={`/Kanbas/courses/${courseId}/Quizzes/${quiz._id}/preview`}>
+                {quiz.name}
+              </Link>
+              <span>
+                {handleQuizStatus(quiz)} |{" "}
+                {quiz.dueDate
+                  ? "Due " + new Date(quiz.dueDate).toDateString()
+                  : "No due date"}{" "}
+                |{" "}
+                {quiz.published === true
+                  ? `${quiz.points ? quiz.points : "N/A"} pts | ${
+                      quiz.questions.length
+                    } Questions`
+                  : "Not published"}
+              </span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    );
+  }
+
   return (
     <>
-      {/* <h1>currentTime: {currentTime.toISOString()}</h1> */}
-      <div
-        className={`popupwindow ${showQuizContextMenu ? "d-flex" : "d-none"}`}
-      >
+      <div className={`popupwindow ${showQuizContextMenu ? "d-flex" : "d-none"}`}>
         <div className="popupbox-container">
           <h5>Quiz Context Menu</h5>
           <p>Quiz Title: {currentQuiz.name}</p>
           <div className="d-flex flex-row justify-content-end gap-2">
-            <button className="btn btn-secondary"
-              onClick={
-                () => {
-                  navigate(`/Kanbas/courses/${courseId}/Quizzes/${currentQuiz._id}/editor`)
-                }
-              }
+            <button
+              className="btn btn-secondary"
+              onClick={() => {
+                navigate(`/Kanbas/courses/${courseId}/Quizzes/${currentQuiz._id}/editor`);
+              }}
             >
               Edit
             </button>
             <button
               className="btn btn-danger"
-              onClick={
-                () => {
-                  client.deleteQuiz(currentQuiz._id);
-                  setShowQuizContextMenu(!showQuizContextMenu)
-                  navigate(0)
-                }
-              }
+              onClick={() => {
+                client.deleteQuiz(currentQuiz._id);
+                setShowQuizContextMenu(!showQuizContextMenu);
+                navigate(0);
+              }}
             >
               Delete
             </button>
@@ -89,9 +107,8 @@ function Quizzes() {
                 className="btn btn-secondary"
                 onClick={() => {
                   client.publishQuiz(currentQuiz._id, false);
-                  navigate(0)
-                  // setRefresh(!refresh);
-                  setShowQuizContextMenu(!showQuizContextMenu)
+                  navigate(0);
+                  setShowQuizContextMenu(!showQuizContextMenu);
                 }}
               >
                 Unpublish
@@ -101,24 +118,15 @@ function Quizzes() {
                 className="btn btn-success"
                 onClick={() => {
                   client.publishQuiz(currentQuiz._id, true);
-                  navigate(0)
-                  // setRefresh(!refresh);
-                  setShowQuizContextMenu(!showQuizContextMenu)
+                  navigate(0);
+                  setShowQuizContextMenu(!showQuizContextMenu);
                 }}
               >
                 Publish
               </button>
             )}
-            <button
-              className="btn btn-primary"
-            >
-              Copy
-            </button>
-            <button
-              className="btn btn-warning"
-            >
-              Sort
-            </button>
+            <button className="btn btn-primary">Copy</button>
+            <button className="btn btn-warning">Sort</button>
             <button
               className="btn btn-secondary"
               onClick={() => setShowQuizContextMenu(!showQuizContextMenu)}
@@ -128,22 +136,11 @@ function Quizzes() {
           </div>
         </div>
       </div>
-      <div className="d-flex flex-md-row flex-column justify-content-start justify-content-md-between align-items-md-center align-items-start gap-4 ">
-        <input
-          className="assignment-search-input"
-          type="text"
-          placeholder="Search for Assignments"
-        />
-        <div className="assiginments-button-grp d-flex gap-2 ">
+      <div className="d-flex flex-md-row flex-column justify-content-md-between gap-4 ">
+        <div>
           <Link to={`/Kanbas/courses/${courseId}/Quizzes/newQuiz/editor`}>
-            <button className="add-assignment p-2 px-4">
-              <FaPlus />
-              Quiz
-            </button>
+            <button className="btn btn-success">+ Quiz</button>
           </Link>
-          <button className="p-2">
-            <FaEllipsisV />
-          </button>
         </div>
       </div>
       <hr />
@@ -156,19 +153,9 @@ function Quizzes() {
               <h3 className="fs-5 fw-bold ">Quizzes</h3>
             </div>
             <span className="float-end d-flex justify-content-center align-items-center gap-2">
-              <div
-                className="
-                                            p-2
-                                            border
-                                            border-1
-                                            rounded-4
-                                            "
-              >
+              <div className="p-2 border border-1 rounded-4 ">
                 40% of Total
               </div>
-              <FaCheckCircle className="text-success" />
-              <FaPlusCircle />
-              <FaEllipsisV />
             </span>
           </div>
 
@@ -182,24 +169,21 @@ function Quizzes() {
                 >
                   <div className="d-flex flex-row justify-content-center align-items-center gap-4">
                     <FaEllipsisV />
-                    <FaList />
+
                     <div className="assignment-title-link d-flex flex-column">
-                     {/* add an if statement */}
-                      <Link
-                        to={`/Kanbas/courses/${courseId}/Quizzes/${quiz._id}/details`}
-                      >
+                      <Link to={`/Kanbas/courses/${courseId}/Quizzes/${quiz._id}/editor`}>
                         {quiz.name}
                       </Link>
                       <span>
-                        {handleQuizStatus(quiz)} | {" "}
+                        {handleQuizStatus(quiz)} |{" "}
                         {quiz.dueDate
                           ? "Due " + new Date(quiz.dueDate).toDateString()
                           : "No due date"}{" "}
-                        |
+                        |{" "}
                         {quiz.published === true
-                          ? `${quiz.points ? quiz.points : "N/A"} pts 
-                                                | ${quiz.questions.length
-                          } Questions`
+                          ? `${quiz.points ? quiz.points : "N/A"} pts | ${
+                              quiz.questions.length
+                            } Questions`
                           : "Not published"}
                       </span>
                     </div>
@@ -208,16 +192,13 @@ function Quizzes() {
                     {quiz.published === true ? (
                       <FaCheckCircle className="text-success" />
                     ) : (
-                      <>
-                        <AiOutlineStop
-                          className="text-black"
-                          onClick={() => {
-                            client.publishQuiz(quiz._id, true);
-                            navigate(0)
-                            // setRefresh(!refresh);
-                          }}
-                        />
-                      </>
+                      <AiOutlineStop
+                        className="text-black"
+                        onClick={() => {
+                          client.publishQuiz(quiz._id, true);
+                          navigate(0);
+                        }}
+                      />
                     )}
                     <Link
                       to={`/Kanbas/courses/${courseId}/Quizzes/${quiz._id}/editor`}
@@ -231,8 +212,7 @@ function Quizzes() {
                       }}
                       onClick={() => {
                         client.deleteQuiz(quiz._id);
-                        // setRefresh(!refresh);
-                        navigate(0)
+                        navigate(0);
                       }}
                     />
                     <FaEllipsisV
@@ -247,9 +227,9 @@ function Quizzes() {
           </ul>
         </li>
       </ul>
-      {
-        quizzes.length === 0 ? (
-          <div className="
+      {quizzes.length === 0 ? (
+        <div
+          className="
           d-flex
           flex-row
           justify-content-center
@@ -260,13 +240,11 @@ function Quizzes() {
           border-1
           rounded-4
           bg-white
-          ">
-            <h2>
-              Please create a quiz
-            </h2>
-          </div>
-        ) : null
-      }
+          "
+        >
+          <h2>Please create a quiz</h2>
+        </div>
+      ) : null}
     </>
   );
 }

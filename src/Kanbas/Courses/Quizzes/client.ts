@@ -2,6 +2,10 @@ import axios from "axios";
 const REMOTE_SERVER = process.env.REACT_APP_REMOTE_SERVER;
 const COURSES_API = `${REMOTE_SERVER}/api/courses`;
 const QUIZZES_API = `${REMOTE_SERVER}/api/quizzes`;
+const USERS_API = `${REMOTE_SERVER}/api/users`;
+const api = axios.create({
+  withCredentials: true,
+});
 
 axios.defaults.withCredentials = true;
 
@@ -83,3 +87,8 @@ export const findAttemptsForQuiz = async (quizId: any) => {
   const response = await axios.get(`${QUIZZES_API}/${quizId}/preview`);
   return response.data;
 }
+export const profile = async () => {
+  const response = await api.post(`${USERS_API}/profile`);
+  console.log(response.data);
+  return response.data;
+};

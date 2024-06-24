@@ -36,15 +36,6 @@ function QuizPreview() {
         }
       )
     )
-
-    // const response = client.findAttemptsForQuiz(quizId);
-    // response.then((data) => {
-    //   if (data === "No preview found") {
-    //   } else {
-    //     navigate(`/Kanbas/courses/${courseId}/Quizzes/${quizId}/preview/results`);
-    //   }
-    // });
-
     client.findQuestionsForQuiz(quizId).then((response) => {
       dispatch(setQuestions(response));
       if (response.length > 0) {
@@ -71,7 +62,6 @@ function QuizPreview() {
   }, [quizId]);
 
   const handleSubmitQuiz = () => {
-    // console.log(answeredQuestions);
     client.submitQuiz(quizId, answeredQuestions);
     navigate(`/Kanbas/courses/${quiz.courseId}/Quizzes/${quizId}/details`);
   }

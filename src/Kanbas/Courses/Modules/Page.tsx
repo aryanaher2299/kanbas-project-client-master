@@ -20,6 +20,8 @@ import {
 import * as client from "./client";
 import { KanbasState } from "../../store";
 import { findModulesForCourse, createModule } from "./client";
+import ModuleControls from "./ModuleControls";
+import { IoEllipsisVertical } from "react-icons/io5";
 
 function ModulePage() {
   const { courseId } = useParams();
@@ -57,32 +59,8 @@ function ModulePage() {
 
   return (
     <>
-      <div
-        className="
-            flex-grow-1
-            "
-      >
-        <div
-          id="main-button-group"
-          className="d-flex flex-row justify-content-end gap-2"
-        >
-          <button className="p-2">Collapse All</button>
-          <button className="p-2">View Progress</button>
-          <select name="Publish" id="Publish" className="p-2">
-            <option value="Publish All" selected>
-              Publish All
-            </option>
-            <option value="Publish">Publish</option>
-            <option value="Unpublish">Unpublish</option>
-          </select>
-          <button className="bg-danger text-white p-2 ">
-            <FaPlus />
-            Module
-          </button>
-          <button className="p-2">
-            <FaEllipsisV />
-          </button>
-        </div>
+      <div className="flex-grow-1">
+        <ModuleControls />
         <hr />
         <div
           className="
@@ -133,16 +111,14 @@ function ModulePage() {
                 onClick={() => dispatch(setModule(module))}
               >
                 <div>
-                  <FaEllipsisV className="me-2" />
+                  <IoEllipsisVertical className="me-2" />
                   {module.name}
                   <span
                     className="float-end
                                     d-flex flex-row gap-2 align-items-center
                                     "
                   >
-                    <FaCheckCircle className="text-success" />
-                    <FaPlusCircle className="ms-2" />
-                    <FaEllipsisV className="ms-2" />
+                    <IoEllipsisVertical className="ms-3" />
                     <div
                       className="
                                         modules-button-group
@@ -155,7 +131,7 @@ function ModulePage() {
                                         "
                     >
                       <button
-                        className="btn btn-primary"
+                        className="btn btn-success"
                         onClick={() => dispatch(setModule(module))}
                       >
                         <FaPencilAlt />
@@ -172,11 +148,11 @@ function ModulePage() {
                 <ul className="list-group">
                   {module.lessons?.map((lesson: any) => (
                     <li className="list-group-item">
-                      <FaEllipsisV className="me-2" />
+                      <IoEllipsisVertical className="me-2" />
                       {lesson.name}
                       <span className="float-end">
                         <FaCheckCircle className="text-success" />
-                        <FaEllipsisV className="ms-2" />
+                        <IoEllipsisVertical className="ms-2" />
                       </span>
                     </li>
                   ))}

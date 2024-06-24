@@ -1,32 +1,41 @@
-.d-none d-sm-block {
-  margin: 0%;
-  padding: 0%;
+.d-none.d-sm-block {
+  margin: 0;
+  padding: 0;
   height: 100%;
-  /* position: fixed; */
 }
 
 .wd-kanbas-navigation {
-  background-color: black;
-  color: red;
+  background-color: #1a1a1a; /* Darker black */
+  color: #d41b2c; /* Red */
   list-style: none;
-  padding: 0px;
-  margin: 0px;
+  padding: 0;
+  margin: 0;
   width: 80px;
   height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
 }
 
 .wd-kanbas-navigation li {
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   text-align: center;
+  width: 100%;
+  padding: 10px 0;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.wd-kanbas-navigation li:hover {
+  background-color: #c163b1; /* Red */
+  transform: scale(1.05);
 }
 
 .wd-kanbas-navigation li.main-logo-container {
   height: 5rem;
   width: 5rem;
+  margin: 20px 0;
 }
 
 .wd-kanbas-navigation li.main-logo-container img {
@@ -53,10 +62,18 @@
   align-items: center;
   justify-content: center;
   gap: 3px;
+  width: 100%;
+  height: 100%;
+  padding: 10px 0;
+  transition: color 0.3s ease;
+}
+
+.wd-kanbas-navigation a:hover {
+  color: white;
 }
 
 .wd-kanbas-navigation a i {
-  color: red;
+  color: #d41b2c;
   font-size: 1.5rem;
 }
 
@@ -72,6 +89,12 @@
 .wd-navigation-small-screen {
   height: 100vh;
   width: 100vw;
+  background-color: #1a1a1a;
+  color: #d41b2c;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .wd-navigation-small-screen ul li {
@@ -79,23 +102,37 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  width: 100%;
+  padding: 10px 0;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.wd-navigation-small-screen ul li:hover {
+  background-color: #efefeb;
+  transform: scale(1.05);
 }
 
 .wd-navigation-small-screen ul li a {
   text-decoration: none;
-  color: #d41b2c;
+  color: white;
   display: flex;
   gap: 1rem;
   justify-content: flex-start;
   align-items: center;
+  width: 100%;
+}
+
+.wd-navigation-small-screen ul li a:hover {
+  color: white;
 }
 
 .wd-navigation-small-screen ul li a i {
-  color: #d41b2c;
+  color: white;
 }
 
 .wd-navigation-small-screen .logo-container {
   width: 60%;
+  margin: 20px 0;
 }
 
 .wd-navigation-small-screen .logo-container img {
@@ -105,5 +142,5 @@
 }
 
 .fav-color {
-  color: "D41B2C";
+  color: #d41b2c;
 }

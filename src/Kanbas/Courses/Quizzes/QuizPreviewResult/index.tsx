@@ -1,9 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router";
-import { addAnsweredQuestion } from "../reducer";
 import * as client from "../client";
-import { find } from "@reduxjs/toolkit/dist/utils";
 
 export function TrueFalseComponent(props: any) {
   const answeredQuestions = useSelector(
@@ -15,7 +13,7 @@ export function TrueFalseComponent(props: any) {
   const dispatch = useDispatch();
 
   return (
-    <div className="preview-choices w-100">
+    <div className="preview-options w-100">
       {props.choices.map((choice: any, index: any) => {
         return (
           <>
@@ -26,9 +24,7 @@ export function TrueFalseComponent(props: any) {
                 name="answer"
                 id=""
                 value={choice}
-                onChange={(e) => {
-                  // handleAnswerQuestion(e.target.value);
-                }}
+                onChange={(e) => {}}
                 checked={answeredQuestions
                   .find(
                     (answeredQuestion: any) =>
@@ -69,7 +65,7 @@ export function FillInTheBlankComponent(props: any) {
 
   return (
     <>
-      <div className="preview-choices w-100">
+      <div className="preview-options w-100">
         {props.choices.map((choice: any, index: any) => {
           return (
             <>
@@ -91,9 +87,7 @@ export function FillInTheBlankComponent(props: any) {
                       (answerObj: any) => answerObj.answerIndex === index
                     )?.answer
                   }
-                  onChange={(e) => {
-                    // handleAnswerQuestion(e, index);
-                  }}
+                  onChange={(e) => {}}
                 />
               </label>
             </>
@@ -114,7 +108,7 @@ export function MultipleChoiceOptionsComponent(props: any) {
   const dispatch = useDispatch();
 
   return (
-    <div className="preview-choices w-100">
+    <div className="preview-options w-100">
       {props.choices.map((choice: any, index: any) => {
         return (
           <>
@@ -125,9 +119,7 @@ export function MultipleChoiceOptionsComponent(props: any) {
                 name="answer"
                 id=""
                 value={choice}
-                onChange={(e) => {
-                  // handleAnswerQuestion(e.target.value);
-                }}
+                onChange={(e) => {}}
                 checked={answeredQuestions
                   .find(
                     (answeredQuestion: any) =>
@@ -160,18 +152,10 @@ function QuizPreviewResult() {
 
   const [chosenResponses, setChosenResponses] = useState<any>({});
 
-  // const [chosenResponses, setChosenResponses] = useState<any>({});
   const [questionResponses, setQuestionResponses] = useState<any[]>([]);
   const [finalAnswers, setFinalAnswers] = useState<any[]>([]);
 
-  // let chosenResponses: any;
-  // let questionResponses: any;
-
   const handleFinalAnswers = () => {
-    // chosenResponses :// {"_id":{"$oid":"6629156213ee537db9f61b37"},"quizId":{"$oid":"6622072ef0f53d357cdca33c"},"username":"iron_man","score":{"$numberInt":"14"},"chosenAnswers":[{"_id":"6623e991d450586ae92108ab","chosenAnswer":["Paris"]},{"_id":"662732611806e3a77f662b87","chosenAnswer":["Captain America"]},{"_id":"6627e7900a2775ac5d001d44","chosenAnswer":[]},{"_id":"6628a6b513ee537db9f61905","chosenAnswer":["False"]}],"__v":{"$numberInt":"0"}}
-    // questionResponses :// {"_id":{"$oid":"6628a6b513ee537db9f61905"},"title":"true","points":{"$numberInt":"2"},"question":"true","choices":["True","False"],"questionType":"True/False","answer":["True"],"__v":{"$numberInt":"0"}}
-    // console.log(chosenResponses);
-    // console.log(questionResponses);
     setFinalAnswers(
       questionResponses.map((question: any) => {
         return {
@@ -217,26 +201,6 @@ function QuizPreviewResult() {
         </div>
       </div>
       <div className="preview-question-container w-75">
-        {/* {answeredQuestions.map((question: any, index: any) => {
-          return (
-            <div className="preview-question w-100">
-              <div className="preview-question-header w-100 d-flex flex-row justify-content-between align-items-center">
-                <span>{index + 1}</span>
-                <span>{question.points}</span>
-              </div>
-              <div className="preview-question-body w-100">
-                <span>{question.question}</span>
-                {question.type === "Multiple Choice" ? (
-                  <MultipleChoiceOptionsComponent choices={question.choices} />
-                ) : question.type === "Fill in the Blank" ? (
-                  <FillInTheBlankComponent choices={question.choices} />
-                ) : (
-                  <TrueFalseComponent choices={question.choices} />
-                )}
-              </div>
-            </div>
-          );
-        })} */}
         {questionResponses.map((question: any, index: any) => {
           return (
             <div className="preview-question w-100">
@@ -254,33 +218,11 @@ function QuizPreviewResult() {
               <div className="">
                 Chosen Answer:
                 {question.questionType !== "Fill in the blank"
-                  ? (finalAnswers.find(
+                  ? finalAnswers.find(
                       (answer: any) => answer.questionId === question._id
-                    )?.chosenAnswer[0])
-                  : (
-                    "hello"
-                    // finalAnswers.find(
-                    //   (answer: any) => answer.questionId === question._id
-                    // )?.map((ans:any) => {
-                    //     <h2>{ans}</h2>
-                    // })
-                    )}
+                    )?.chosenAnswer[0]
+                  : "hello"}
               </div>
-              {/* <div className="">
-                            Chosen Answer: {
-                                qu
-                            }
-                        </div> */}
-              {/* <div className="preview-question-body w-100">
-                            <span>{question.question}</span>
-                            {question.questionType === "Multiple Choice" ? (
-                                <MultipleChoiceOptionsComponent choices={question.choices} />
-                            ) : question.questionType === "Fill in the Blank" ? (
-                                <FillInTheBlankComponent choices={question.choices} />
-                            ) : (
-                                <TrueFalseComponent choices={question.choices} />
-                            )}
-                        </div> */}
             </div>
           );
         })}

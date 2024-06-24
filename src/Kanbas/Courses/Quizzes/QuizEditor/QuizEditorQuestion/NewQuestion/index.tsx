@@ -20,7 +20,7 @@ export const PossibleAnswer = ({
   onDelete: any;
 }) => {
   return (
-    <div className="possible-answer quiz-input-grp">
+    <div className="correct-answers quiz-input-group">
       <label htmlFor="" className="input-grp">
         <span className="text-danger">Possible Answer</span>
         <input
@@ -57,7 +57,7 @@ export const FillInTheBlanks = ({
   onDelete: any;
 }) => {
   return (
-    <div className="possible-answer quiz-input-grp">
+    <div className="correct-answers quiz-input-group">
       <label htmlFor="" className="input-grp">
         <span className="text-danger">{index + 1}</span>
         <input
@@ -92,7 +92,7 @@ export const TrueFalse = ({
   onChange: any;
 }) => {
   return (
-    <div className="possible-answer quiz-input-grp d-flex flex-column gap-4 ">
+    <div className="correct-answers quiz-input-group d-flex flex-column gap-4 ">
       <label htmlFor="" className="input-grp">
         <input
           type="radio"
@@ -148,17 +148,15 @@ function NewQuestion() {
 
   useEffect(() => {
     dispatch(
-      setQuestion(
-        {
-          _id: "",
-          question: "",
-          type: "Multiple Choice",
-          options: [],
-          correctAnswer: "",
-          points: 0
-        }
-      )
-    )
+      setQuestion({
+        _id: "",
+        question: "",
+        type: "Multiple Choice",
+        options: [],
+        correctAnswer: "",
+        points: 0,
+      })
+    );
     if (questionId === "newQuestion") {
       setNewQuestion({
         _id: "",
@@ -174,23 +172,18 @@ function NewQuestion() {
       client.findQuestionById(quizId, questionId).then((question) => {
         setNewQuestion({
           ...question,
-          // possibleAnswers: question.choices
-          //   // .filter((choice: string) => choice !== question.answer[0])
-          //   .map((choice: string) => ({
-          //     id: `answer_${choice}`,
-          //     answer: choice,
-          //   })),
-          possibleAnswers: question.questionType === "Fill in the Blank"
-            ? question.choices.map((choice: string) => ({
-              id: `answer_${choice}`,
-              answer: choice,
-            }))
-            : question.choices
-              .filter((choice: string) => choice !== question.answer[0])
-              .map((choice: string) => ({
-                id: `answer_${choice}`,
-                answer: choice,
-              })),
+          possibleAnswers:
+            question.questionType === "Fill in the Blank"
+              ? question.choices.map((choice: string) => ({
+                  id: `answer_${choice}`,
+                  answer: choice,
+                }))
+              : question.choices
+                  .filter((choice: string) => choice !== question.answer[0])
+                  .map((choice: string) => ({
+                    id: `answer_${choice}`,
+                    answer: choice,
+                  })),
         });
       });
     }
@@ -267,7 +260,10 @@ function NewQuestion() {
       alert("Please provide question");
       return;
     }
-    if (newQuestion.answer.length === 0 && newQuestion.questionType !== "Fill in the Blank") {
+    if (
+      newQuestion.answer.length === 0 &&
+      newQuestion.questionType !== "Fill in the Blank"
+    ) {
       alert("Please provide answer");
       return;
     }
@@ -325,20 +321,6 @@ function NewQuestion() {
 
   return (
     <>
-      {/* {
-      newQuestion.possibleAnswers.map((possibleAnswer, index) => (
-        <h1>
-          {index + 1}. {possibleAnswer.answer}
-        </h1>
-      ))
-    }
-    {
-      newQuestion.choices.map((choice, index) => (
-        <h1>
-          {index + 1}. {choice}
-        </h1>
-      ))
-    } */}
       <div className="d-flex flex-column gap-3 newQuestion-main-grp">
         <div className="d-flex flex-row justify-content-between align-items-center gap-4 ">
           <div className="d-flex flex-row justify-content-start align-items-center gap-4">
@@ -431,7 +413,7 @@ function NewQuestion() {
               <h6 className="newQuestion-heading">Answers:</h6>
               <div className="newquestion-answer-container d-flex flex-column gap-4">
                 {newQuestion.questionType === "Multiple Choice" ? (
-                  <div className="correct-answer quiz-input-grp">
+                  <div className="correct-answer quiz-input-group">
                     <label htmlFor="" className="">
                       <span className="text-success">Correct Answer</span>
                       <input
@@ -449,34 +431,28 @@ function NewQuestion() {
                     </label>
                   </div>
                 ) : null}
-                {/* {newQuestion.questionType === "Fill in the Blank"
-                  ? newQuestion.possibleAnswers.map((possibleAnswer, index) => (
-                    <h1>
-                      {index + 1}. {possibleAnswer.answer}
-                    </h1>
-                  ))
-                  : null} */}
+
                 {newQuestion.questionType === "Fill in the Blank"
                   ? newQuestion.possibleAnswers.map((possibleAnswer, index) => (
-                    <FillInTheBlanks
-                      key={possibleAnswer.id}
-                      index={index}
-                      answer={possibleAnswer.answer}
-                      onChange={handlePossibleAnswerChange}
-                      onDelete={handleDeletePossibleAnswer}
-                    />
-                  ))
+                      <FillInTheBlanks
+                        key={possibleAnswer.id}
+                        index={index}
+                        answer={possibleAnswer.answer}
+                        onChange={handlePossibleAnswerChange}
+                        onDelete={handleDeletePossibleAnswer}
+                      />
+                    ))
                   : null}
                 {newQuestion.questionType === "Multiple Choice"
                   ? newQuestion.possibleAnswers.map((possibleAnswer, index) => (
-                    <PossibleAnswer
-                      key={possibleAnswer.id}
-                      index={index}
-                      answer={possibleAnswer.answer}
-                      onChange={handlePossibleAnswerChange}
-                      onDelete={handleDeletePossibleAnswer}
-                    />
-                  ))
+                      <PossibleAnswer
+                        key={possibleAnswer.id}
+                        index={index}
+                        answer={possibleAnswer.answer}
+                        onChange={handlePossibleAnswerChange}
+                        onDelete={handleDeletePossibleAnswer}
+                      />
+                    ))
                   : null}
                 {newQuestion.questionType === "True/False" ? (
                   <TrueFalse
@@ -506,14 +482,12 @@ function NewQuestion() {
             </div>
           ) : null}
         </div>
-        <div
-          className="submission-button-grp d-flex gap-3"
-        >
-          <button onClick={
-            () => {
+        <div className="submission-button-grp d-flex gap-3">
+          <button
+            onClick={() => {
               navigate(`/kanbas/courses/${courseId}/quizzes/${quizId}/editor`);
-            }
-          }>
+            }}
+          >
             Cancel
           </button>
           <button

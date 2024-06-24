@@ -94,7 +94,7 @@ function QuizEditorDetails(quizId: any) {
                   );
                 }}
               />
-          <div className="quiz-input-grp">
+          <div className="quiz-input-group">
             <div className="quiz-input-label">Quiz Type</div>
             <div className="quiz-input-cont">
               <select
@@ -127,7 +127,7 @@ function QuizEditorDetails(quizId: any) {
               </select>
             </div>
           </div>
-          <div className="quiz-input-grp">
+          <div className="quiz-input-group">
             <div className="quiz-input-label">Points</div>
             <div className="quiz-input-cont">
               <input
@@ -147,7 +147,7 @@ function QuizEditorDetails(quizId: any) {
               />
             </div>
           </div>
-          <div className="quiz-input-grp">
+          <div className="quiz-input-group">
             <div className="quiz-input-label">Assignment Group</div>
             <div className="quiz-input-cont">
               <select
@@ -181,7 +181,7 @@ function QuizEditorDetails(quizId: any) {
               </select>
             </div>
           </div>
-          <div className="quiz-input-grp">
+          <div className="quiz-input-group">
             <div className="quiz-input-label"></div>
             <div className="quiz-input-cont">
               <span>Options</span>
@@ -375,7 +375,7 @@ function QuizEditorDetails(quizId: any) {
               </div>
             </div>
           </div>
-          <div className="quiz-input-grp">
+          <div className="quiz-input-group">
             <div className="quiz-input-label"></div>
             <div className="input-grp">
               <label>Assign</label>

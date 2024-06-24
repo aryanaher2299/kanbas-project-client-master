@@ -4,7 +4,6 @@ const COURSES_API = `${REMOTE_SERVER}/api/courses`;
 const MODULES_API = `${REMOTE_SERVER}/api/modules`;
 
 export const findModulesForCourse = async (courseId: any) => {
-  console.log("findModulesForCourse", courseId);
   const response = await axios.get(`${COURSES_API}/${courseId}/modules`);
   return response.data;
 };
