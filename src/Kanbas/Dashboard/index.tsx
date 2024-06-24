@@ -27,6 +27,12 @@ function Dashboard({
   return (
     <>
       <div className="p-4">
+        <a href="https://github.com/aryanaher2299/kanbas-project-server-master">Github Server Link</a><br/>
+        <a href="https://github.com/aryanaher2299/kanbas-project-client-master">Github Client Link</a><br/>
+        <h4>Section Summer 1</h4>
+        <h4>Aryan Aher</h4>
+        <h4>Kuldeep Choksi</h4>
+        <h4>Adhavan Alexander</h4>
         <h1>Dashboard</h1>
         <hr />
         <div className="w-50 d-flex flex-column gap-2 p-4">
