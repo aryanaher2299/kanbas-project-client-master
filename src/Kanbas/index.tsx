@@ -74,6 +74,8 @@ function Kanbas() {
       >
         <div className="d-none d-md-block ">
           <KanbasNavigation />
+          <a href="https://github.com/aryanaher2299/kanbas-project-client-master">git link for client</a>
+          <a href="https://github.com/aryanaher2299/kanbas-project-server-master"></a>
         </div>
         <div
           style={{
@@ -99,6 +101,7 @@ function Kanbas() {
                   setRefresh={setRefresh}
                 />
               }
+          
             />
             <Route path="Courses/:courseId/*" element={<Courses />} />
           </Routes>
